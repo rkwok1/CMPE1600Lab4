@@ -72,8 +72,13 @@
             this.Controls.Add(this.Fixed_Label_Slow);
             this.Controls.Add(this.Fixed_Label_Fast);
             this.Controls.Add(this.UI_TrackBar_Speed);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Speed";
             this.Text = "Speed";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Speed_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.UI_TrackBar_Speed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
