@@ -77,6 +77,7 @@
             this.UI_Button_Cycle.TabIndex = 3;
             this.UI_Button_Cycle.Text = "Cycle";
             this.UI_Button_Cycle.UseVisualStyleBackColor = true;
+            this.UI_Button_Cycle.Click += new System.EventHandler(this.UI_Button_Cycle_Click);
             // 
             // Fixed_Label_Cycle
             // 

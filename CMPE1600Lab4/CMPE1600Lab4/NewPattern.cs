@@ -28,7 +28,7 @@ namespace CMPE1600Lab4
         }
         
         //Global Variables
-        int cells = 0;
+        int cells = 1000;
         Color chosenColor = Color.Red;
         public NewPattern()
         {
@@ -44,18 +44,27 @@ namespace CMPE1600Lab4
         //If user selects red
         private void UI_RadioButton_Red_CheckedChanged(object sender, EventArgs e)
         {
-            chosenColor = Color.Red;
+            if (chosenColor != Color.Red)
+            {
+                chosenColor = Color.Red;
+            }
         }
 
         //If user selects green
         private void UI_RadioButton_Green_CheckedChanged(object sender, EventArgs e)
         {
-            chosenColor = Color.Green;
+            if (chosenColor != Color.Green)
+            {
+                chosenColor = Color.Green;
+            }
         }
         //If user select grey
         private void UI_RadioButton_Grey_CheckedChanged(object sender, EventArgs e)
         {
-            chosenColor = Color.Gray;
+            if (chosenColor != Color.Gray)
+            {
+                chosenColor = Color.Gray;
+            }
         }
         //If user presses ok, close form and send values
         private void UI_Button_OK_Click(object sender, EventArgs e)

@@ -106,9 +106,9 @@
             this.UI_Label_CellCount.AutoSize = true;
             this.UI_Label_CellCount.Location = new System.Drawing.Point(228, 76);
             this.UI_Label_CellCount.Name = "UI_Label_CellCount";
-            this.UI_Label_CellCount.Size = new System.Drawing.Size(13, 13);
+            this.UI_Label_CellCount.Size = new System.Drawing.Size(31, 13);
             this.UI_Label_CellCount.TabIndex = 2;
-            this.UI_Label_CellCount.Text = "0";
+            this.UI_Label_CellCount.Text = "1000";
             // 
             // Fixed_Label_NumberOfCells
             // 
@@ -128,7 +128,7 @@
             this.UI_TrackBar_NumberOfCells.Size = new System.Drawing.Size(330, 45);
             this.UI_TrackBar_NumberOfCells.TabIndex = 4;
             this.UI_TrackBar_NumberOfCells.TickFrequency = 100;
-            this.UI_TrackBar_NumberOfCells.Value = 100;
+            this.UI_TrackBar_NumberOfCells.Value = 1000;
             this.UI_TrackBar_NumberOfCells.Scroll += new System.EventHandler(this.UI_TrackBar_NumberOfCells_Scroll);
             // 
             // Fixed_Label_MinCells
