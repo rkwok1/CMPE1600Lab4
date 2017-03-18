@@ -19,10 +19,10 @@ namespace CMPE1600Lab4
         Speed dlg = null;
         //Global Variables
         Random rnd = new Random();
-      static  CDrawer drawSpace = new CDrawer();
-       static bool[,] foregroundArray = new bool[80, 60];
+        static CDrawer drawSpace = new CDrawer();
+        static bool[,] foregroundArray = new bool[80, 60];
         static bool[,] backgroundArray = new bool[80, 60];
-       static Color patternColor = Color.Red;
+        static Color patternColor = Color.Red;
         int cellCount = 1000;
         int cycleSpeed = 200;
         int cycleCounter = 0;
@@ -33,6 +33,7 @@ namespace CMPE1600Lab4
 
             //Scales GDI Drawer Window
             drawSpace.Scale = 10;
+
             DrawInitialArray();
         }
 
@@ -62,7 +63,7 @@ namespace CMPE1600Lab4
             {
                 dlg.Hide();
             }
-          
+
 
         }
         //When stop button is clicked
@@ -102,7 +103,7 @@ namespace CMPE1600Lab4
         private void UI_Timer_Tick(object sender, EventArgs e)
         {
             UI_Timer.Interval = cycleSpeed;
-            LifeCycle(foregroundArray,backgroundArray);
+            LifeCycle(foregroundArray, backgroundArray);
         }
 
 
@@ -125,7 +126,7 @@ namespace CMPE1600Lab4
         *         The foreground will be responsible for outputting to the GDI drawer window, while the
         *         background will be responsible for developing the next cycle.
         ************************************************************************************************/
-        public void LifeCycle(bool [,] array1 , bool [,] array2)
+        public void LifeCycle(bool[,] array1, bool[,] array2)
         {
             //Variables
             int liveNeighbors = 0;
@@ -134,12 +135,12 @@ namespace CMPE1600Lab4
             //Considers X values of 0 or 79 for, and y values of 0, 59. All other values beyond are considered dead
             for (int x = 1; x < 79; x++)
             {
-                for (int y= 1; y < 59; y++)
+                for (int y = 1; y < 59; y++)
                 {
 
                     if (array1[x, y] == true || array1[x, y] == false)
                     {
-                        
+
                         //Eigth special Cases
                         //1.)live above
                         if (array1[x, y + 1] == true)
@@ -152,32 +153,32 @@ namespace CMPE1600Lab4
                             liveNeighbors++;
                         }
                         //3.)live left
-                        if(array1[x-1,y] == true)
+                        if (array1[x - 1, y] == true)
                         {
                             liveNeighbors++;
                         }
                         //4.)live right
-                        if(array1[x+1,y] == true)
+                        if (array1[x + 1, y] == true)
                         {
                             liveNeighbors++;
                         }
                         //5.)live top left
-                        if(array1[x-1, y+1] == true)
+                        if (array1[x - 1, y + 1] == true)
                         {
                             liveNeighbors++;
                         }
                         //6.)live top right
-                        if(array1[x+1, y+1]== true)
+                        if (array1[x + 1, y + 1] == true)
                         {
                             liveNeighbors++;
-                        } 
+                        }
                         //7.)live bottom left
-                        if(array1[x -1, y-1] == true)
+                        if (array1[x - 1, y - 1] == true)
                         {
                             liveNeighbors++;
                         }
                         //8.)live bottom right
-                        if(array1[x+1, y-1] == true)
+                        if (array1[x + 1, y - 1] == true)
                         {
                             liveNeighbors++;
                         }
@@ -188,21 +189,21 @@ namespace CMPE1600Lab4
                             case 1:
                                 //Cell Dies at next cycle
                                 array2[x, y] = false;
-                                
+
                                 break;
                             case 2:
                                 //Cell remains alive to next cycle
                                 if (array1[x, y] == true)
                                 {
                                     array2[x, y] = true;
-                                } 
+                                }
                                 break;
                             case 3:
-                                //cell remains alive point
-                                array2[x, y] = true;
+                                //cell remains alive point or becomes live if intially dead
                                 //Cell with three live neighbors will go from dead to alive 
-                                
+                                array2[x, y] = true;
                                 break;
+                                //If greater than 3 live cells nearby, overpopualtion occurs
                             case 4:
                             case 5:
                             case 6:
@@ -213,7 +214,7 @@ namespace CMPE1600Lab4
                                 break;
                         }
                         liveNeighbors = 0;
-                        
+
                     }
                 }
             }
@@ -222,7 +223,8 @@ namespace CMPE1600Lab4
             UI_Label_CycleCount.Text = cycleCounter.ToString();
             //Draw Next Cycle using background Method
             DrawNextCycle(backgroundArray);
-            //makes foreground equal to the new background for next calculation
+            //Clears foregroundand copies contents of background back to foreground
+            Array.Clear(foregroundArray, 0, foregroundArray.Length);
             foregroundArray = ((bool[,])array2.Clone());
             Array.Clear(backgroundArray, 0, backgroundArray.Length);
             //Consider exceptions for four corners
@@ -233,12 +235,12 @@ namespace CMPE1600Lab4
          * Method: DrawNextCycle()
          * Effect: Draws next Cycle using background array
          * **********************************************************************************************/
-        public static void DrawNextCycle( bool [,] array2)
+        public static void DrawNextCycle(bool[,] array2)
         {
             drawSpace.BBColour = Color.Black;
-            for (int x = 0; x < 79; x++)
+            for (int x = 0; x < 80; x++)
             {
-                for (int y = 0; y < 59; y++)
+                for (int y = 0; y < 60; y++)
                 {
                     if (array2[x, y] == true)
                     {
@@ -247,8 +249,8 @@ namespace CMPE1600Lab4
 
                 }
             }
-           
-            
+
+
         }
 
         /************************************************************************************************
@@ -258,7 +260,7 @@ namespace CMPE1600Lab4
          ************************************************************************************************/
         public void DrawInitialArray()
         {
-            
+
             int xCoor;
             int yCoor;
             int counter = 0;
@@ -271,7 +273,7 @@ namespace CMPE1600Lab4
             do
             {
                 //Get Length used to get dimension, 0 is for x dimensions, 1 for y dimensions
-                xCoor = rnd.Next(0, foregroundArray.GetLength(0)); 
+                xCoor = rnd.Next(0, foregroundArray.GetLength(0));
                 yCoor = rnd.Next(0, foregroundArray.GetLength(1));
                 if (foregroundArray[xCoor, yCoor] == false) //If spot in array is not already taken
                 {
@@ -284,7 +286,7 @@ namespace CMPE1600Lab4
             {
                 for (int y = 0; y < foregroundArray.GetLength(1); y++)
                 {
-                    if(foregroundArray[x,y] == true)
+                    if (foregroundArray[x, y] == true)
                     {
                         drawSpace.SetBBScaledPixel(x, y, patternColor); // Draw in all spots that have been labelled true
                     }
@@ -306,12 +308,12 @@ namespace CMPE1600Lab4
          * Method: CallbackDialogClosing()
          * Effect: Callback method for when the form is closing
          * **********************************************************************************************/
-         public void CallbackDialogClosing()
+        public void CallbackDialogClosing()
         {
             //Hides Application but callback method does nothing
         }
 
-        
+
     }
 }
 
