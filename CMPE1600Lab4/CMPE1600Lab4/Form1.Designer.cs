@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.UI_Button_NewPattern = new System.Windows.Forms.Button();
             this.UI_Button_Start = new System.Windows.Forms.Button();
             this.UI_Button_Stop = new System.Windows.Forms.Button();
             this.UI_Button_Cycle = new System.Windows.Forms.Button();
             this.Fixed_Label_Cycle = new System.Windows.Forms.Label();
             this.UI_Label_CycleCount = new System.Windows.Forms.Label();
+            this.UI_Timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // UI_Button_NewPattern
@@ -44,6 +46,7 @@
             this.UI_Button_NewPattern.TabIndex = 0;
             this.UI_Button_NewPattern.Text = "New Pattern";
             this.UI_Button_NewPattern.UseVisualStyleBackColor = true;
+            this.UI_Button_NewPattern.Click += new System.EventHandler(this.UI_Button_NewPattern_Click);
             // 
             // UI_Button_Start
             // 
@@ -53,6 +56,7 @@
             this.UI_Button_Start.TabIndex = 1;
             this.UI_Button_Start.Text = "Start";
             this.UI_Button_Start.UseVisualStyleBackColor = true;
+            this.UI_Button_Start.Click += new System.EventHandler(this.UI_Button_Start_Click);
             // 
             // UI_Button_Stop
             // 
@@ -63,6 +67,7 @@
             this.UI_Button_Stop.TabIndex = 2;
             this.UI_Button_Stop.Text = "Stop";
             this.UI_Button_Stop.UseVisualStyleBackColor = true;
+            this.UI_Button_Stop.Click += new System.EventHandler(this.UI_Button_Stop_Click);
             // 
             // UI_Button_Cycle
             // 
@@ -119,6 +124,7 @@
         private System.Windows.Forms.Button UI_Button_Cycle;
         private System.Windows.Forms.Label Fixed_Label_Cycle;
         private System.Windows.Forms.Label UI_Label_CycleCount;
+        private System.Windows.Forms.Timer UI_Timer;
     }
 }
 

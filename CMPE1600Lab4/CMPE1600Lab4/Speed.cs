@@ -12,9 +12,17 @@ namespace CMPE1600Lab4
 {
     public partial class Speed : Form
     {
+        int scrollValue = 0;
+        //Define delegate type
+        delegate int delInt ()
         public Speed()
         {
             InitializeComponent();
+        }
+        //When Scroll Bar is adjusted
+        private void UI_TrackBar_Speed_Scroll(object sender, EventArgs e)
+        {
+            scrollValue = UI_TrackBar_Speed.Value;
         }
     }
 }

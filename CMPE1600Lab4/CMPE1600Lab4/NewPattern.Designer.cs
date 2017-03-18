@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.UI_GroupBox_Color = new System.Windows.Forms.GroupBox();
-            this.UI_RadioButton_Red = new System.Windows.Forms.RadioButton();
-            this.UI_RadioButton_Green = new System.Windows.Forms.RadioButton();
             this.UI_RadioButton_Grey = new System.Windows.Forms.RadioButton();
+            this.UI_RadioButton_Green = new System.Windows.Forms.RadioButton();
+            this.UI_RadioButton_Red = new System.Windows.Forms.RadioButton();
             this.Fixed_Label_CellCount = new System.Windows.Forms.Label();
             this.UI_Label_CellCount = new System.Windows.Forms.Label();
             this.Fixed_Label_NumberOfCells = new System.Windows.Forms.Label();
@@ -56,16 +56,17 @@
             this.UI_GroupBox_Color.TabStop = false;
             this.UI_GroupBox_Color.Text = "Color";
             // 
-            // UI_RadioButton_Red
+            // UI_RadioButton_Grey
             // 
-            this.UI_RadioButton_Red.AutoSize = true;
-            this.UI_RadioButton_Red.Location = new System.Drawing.Point(7, 20);
-            this.UI_RadioButton_Red.Name = "UI_RadioButton_Red";
-            this.UI_RadioButton_Red.Size = new System.Drawing.Size(45, 17);
-            this.UI_RadioButton_Red.TabIndex = 0;
-            this.UI_RadioButton_Red.TabStop = true;
-            this.UI_RadioButton_Red.Text = "Red";
-            this.UI_RadioButton_Red.UseVisualStyleBackColor = true;
+            this.UI_RadioButton_Grey.AutoSize = true;
+            this.UI_RadioButton_Grey.Location = new System.Drawing.Point(7, 68);
+            this.UI_RadioButton_Grey.Name = "UI_RadioButton_Grey";
+            this.UI_RadioButton_Grey.Size = new System.Drawing.Size(47, 17);
+            this.UI_RadioButton_Grey.TabIndex = 2;
+            this.UI_RadioButton_Grey.TabStop = true;
+            this.UI_RadioButton_Grey.Text = "Grey";
+            this.UI_RadioButton_Grey.UseVisualStyleBackColor = true;
+            this.UI_RadioButton_Grey.CheckedChanged += new System.EventHandler(this.UI_RadioButton_Grey_CheckedChanged);
             // 
             // UI_RadioButton_Green
             // 
@@ -77,17 +78,19 @@
             this.UI_RadioButton_Green.TabStop = true;
             this.UI_RadioButton_Green.Text = "Green";
             this.UI_RadioButton_Green.UseVisualStyleBackColor = true;
+            this.UI_RadioButton_Green.CheckedChanged += new System.EventHandler(this.UI_RadioButton_Green_CheckedChanged);
             // 
-            // UI_RadioButton_Grey
+            // UI_RadioButton_Red
             // 
-            this.UI_RadioButton_Grey.AutoSize = true;
-            this.UI_RadioButton_Grey.Location = new System.Drawing.Point(7, 68);
-            this.UI_RadioButton_Grey.Name = "UI_RadioButton_Grey";
-            this.UI_RadioButton_Grey.Size = new System.Drawing.Size(47, 17);
-            this.UI_RadioButton_Grey.TabIndex = 2;
-            this.UI_RadioButton_Grey.TabStop = true;
-            this.UI_RadioButton_Grey.Text = "Grey";
-            this.UI_RadioButton_Grey.UseVisualStyleBackColor = true;
+            this.UI_RadioButton_Red.AutoSize = true;
+            this.UI_RadioButton_Red.Location = new System.Drawing.Point(7, 20);
+            this.UI_RadioButton_Red.Name = "UI_RadioButton_Red";
+            this.UI_RadioButton_Red.Size = new System.Drawing.Size(45, 17);
+            this.UI_RadioButton_Red.TabIndex = 0;
+            this.UI_RadioButton_Red.TabStop = true;
+            this.UI_RadioButton_Red.Text = "Red";
+            this.UI_RadioButton_Red.UseVisualStyleBackColor = true;
+            this.UI_RadioButton_Red.CheckedChanged += new System.EventHandler(this.UI_RadioButton_Red_CheckedChanged);
             // 
             // Fixed_Label_CellCount
             // 
@@ -126,6 +129,7 @@
             this.UI_TrackBar_NumberOfCells.TabIndex = 4;
             this.UI_TrackBar_NumberOfCells.TickFrequency = 100;
             this.UI_TrackBar_NumberOfCells.Value = 100;
+            this.UI_TrackBar_NumberOfCells.Scroll += new System.EventHandler(this.UI_TrackBar_NumberOfCells_Scroll);
             // 
             // Fixed_Label_MinCells
             // 
@@ -153,6 +157,7 @@
             this.UI_Button_OK.TabIndex = 7;
             this.UI_Button_OK.Text = "OK";
             this.UI_Button_OK.UseVisualStyleBackColor = true;
+            this.UI_Button_OK.Click += new System.EventHandler(this.UI_Button_OK_Click);
             // 
             // UI_Button_Cancel
             // 
@@ -162,12 +167,14 @@
             this.UI_Button_Cancel.TabIndex = 8;
             this.UI_Button_Cancel.Text = "Cancel";
             this.UI_Button_Cancel.UseVisualStyleBackColor = true;
+            this.UI_Button_Cancel.Click += new System.EventHandler(this.UI_Button_Cancel_Click);
             // 
             // NewPattern
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 280);
+            this.ControlBox = false;
             this.Controls.Add(this.UI_Button_Cancel);
             this.Controls.Add(this.UI_Button_OK);
             this.Controls.Add(this.Fixed_Label_MaxCells);
@@ -177,6 +184,9 @@
             this.Controls.Add(this.UI_Label_CellCount);
             this.Controls.Add(this.Fixed_Label_CellCount);
             this.Controls.Add(this.UI_GroupBox_Color);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NewPattern";
             this.Text = "NewPattern";
             this.UI_GroupBox_Color.ResumeLayout(false);
