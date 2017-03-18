@@ -24,7 +24,7 @@ namespace CMPE1600Lab4
         static bool[,] backgroundArray = new bool[80, 60];
        static Color patternColor = Color.Red;
         int cellCount = 1000;
-        int cycleSpeed = 0;
+        int cycleSpeed = 200;
         int cycleCounter = 0;
 
         public UI_MainForm()
@@ -104,7 +104,8 @@ namespace CMPE1600Lab4
         //While timer is enabled 
         private void UI_Timer_Tick(object sender, EventArgs e)
         {
-            //Lifecycle() constantly runs
+            UI_Timer.Interval = cycleSpeed;
+            LifeCycle(foregroundArray,backgroundArray);
         }
 
 
@@ -217,6 +218,9 @@ namespace CMPE1600Lab4
             }
             //Draw Next Cycle using background Method
             DrawNextCycle(backgroundArray);
+            //makes foreground equal to the new background for next calculation
+            foregroundArray = ((bool[,])array2.Clone());
+            Array.Clear(backgroundArray, 0, backgroundArray.Length);
             //Consider exceptions for four corners
 
             //

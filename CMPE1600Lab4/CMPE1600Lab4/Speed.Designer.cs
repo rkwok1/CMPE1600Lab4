@@ -43,7 +43,7 @@
             this.UI_TrackBar_Speed.Size = new System.Drawing.Size(357, 45);
             this.UI_TrackBar_Speed.TabIndex = 0;
             this.UI_TrackBar_Speed.TickFrequency = 100;
-            this.UI_TrackBar_Speed.Value = 200;
+            this.UI_TrackBar_Speed.Value = 1000;
             this.UI_TrackBar_Speed.Scroll += new System.EventHandler(this.UI_TrackBar_Speed_Scroll);
             // 
             // Fixed_Label_Fast
