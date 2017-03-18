@@ -95,9 +95,6 @@ namespace CMPE1600Lab4
         //If the cycle button is pressed
         private void UI_Button_Cycle_Click(object sender, EventArgs e)
         {
-            //Keeps track of how many cycles the game has run
-            cycleCounter++;
-            UI_Label_CycleCount.Text = cycleCounter.ToString();
             //Starts only one life cycle
             LifeCycle(foregroundArray, backgroundArray);
         }
@@ -128,18 +125,19 @@ namespace CMPE1600Lab4
         *         The foreground will be responsible for outputting to the GDI drawer window, while the
         *         background will be responsible for developing the next cycle.
         ************************************************************************************************/
-        public static void LifeCycle(bool [,] array1 , bool [,] array2)
+        public void LifeCycle(bool [,] array1 , bool [,] array2)
         {
             //Variables
             int liveNeighbors = 0;
+
             //Examine all locations in the foreground for live tiles
             //Considers X values of 0 or 79 for, and y values of 0, 59. All other values beyond are considered dead
-            for (int x = 1; x < 78; x++)
+            for (int x = 1; x < 79; x++)
             {
-                for (int y= 1; y < 58; y++)
+                for (int y= 1; y < 59; y++)
                 {
 
-                    if(array1[x,y] == true)
+                    if (array1[x, y] == true || array1[x, y] == false)
                     {
                         
                         //Eigth special Cases
@@ -194,13 +192,16 @@ namespace CMPE1600Lab4
                                 break;
                             case 2:
                                 //Cell remains alive to next cycle
-                                array2[x, y] = true; 
+                                if (array1[x, y] == true)
+                                {
+                                    array2[x, y] = true;
+                                } 
                                 break;
                             case 3:
                                 //cell remains alive point
                                 array2[x, y] = true;
                                 //Cell with three live neighbors will go from dead to alive 
-                   
+                                
                                 break;
                             case 4:
                             case 5:
@@ -216,6 +217,9 @@ namespace CMPE1600Lab4
                     }
                 }
             }
+            //Increase ccyle count and outptus to label
+            cycleCounter++;
+            UI_Label_CycleCount.Text = cycleCounter.ToString();
             //Draw Next Cycle using background Method
             DrawNextCycle(backgroundArray);
             //makes foreground equal to the new background for next calculation
