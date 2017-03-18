@@ -99,6 +99,10 @@
             this.UI_Label_CycleCount.TabIndex = 5;
             this.UI_Label_CycleCount.Text = "0";
             // 
+            // UI_Timer
+            // 
+            this.UI_Timer.Tick += new System.EventHandler(this.UI_Timer_Tick);
+            // 
             // UI_MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

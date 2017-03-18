@@ -19,10 +19,10 @@ namespace CMPE1600Lab4
         Speed dlg = null;
         //Global Variables
         Random rnd = new Random();
-        CDrawer drawSpace = new CDrawer();
-        bool[,] foregroundArray = new bool[80, 60];
-        bool[,] backgroundArray = new bool[80, 60];
-        Color patternColor = Color.Red;
+      static  CDrawer drawSpace = new CDrawer();
+       static bool[,] foregroundArray = new bool[80, 60];
+        static bool[,] backgroundArray = new bool[80, 60];
+       static Color patternColor = Color.Red;
         int cellCount = 1000;
         int cycleSpeed = 0;
         int cycleCounter = 0;
@@ -33,7 +33,7 @@ namespace CMPE1600Lab4
 
             //Scales GDI Drawer Window
             drawSpace.Scale = 10;
-            DisplayArray();
+            DrawInitialArray();
         }
 
         //When pressing the start button, timer is enabled
@@ -89,14 +89,22 @@ namespace CMPE1600Lab4
             cycleCounter = 0;
             UI_Label_CycleCount.Text = "0";
             //Display New Foreground
-            DisplayArray();
+            DrawInitialArray();
 
         }
         //If the cycle button is pressed
         private void UI_Button_Cycle_Click(object sender, EventArgs e)
         {
+            //Keeps track of how many cycles the game has run
             cycleCounter++;
             UI_Label_CycleCount.Text = cycleCounter.ToString();
+            //Starts only one life cycle
+            LifeCycle(foregroundArray, backgroundArray);
+        }
+        //While timer is enabled 
+        private void UI_Timer_Tick(object sender, EventArgs e)
+        {
+            //Lifecycle() constantly runs
         }
 
 
@@ -105,10 +113,10 @@ namespace CMPE1600Lab4
          * Method: ClearArray()
          * Effect: Erases all data within passed array
          * **********************************************************************************************/
-        public static void ClearArrays(bool[,] array1, bool[,] array2)
+        public static void ClearArrays()
         {
-            Array.Clear(array1, 0, array1.Length);
-            Array.Clear(array2, 0, array2.Length);
+            Array.Clear(foregroundArray, 0, foregroundArray.Length);
+            Array.Clear(backgroundArray, 0, backgroundArray.Length);
         }
 
 
@@ -119,15 +127,128 @@ namespace CMPE1600Lab4
         *         The foreground will be responsible for outputting to the GDI drawer window, while the
         *         background will be responsible for developing the next cycle.
         ************************************************************************************************/
+        public static void LifeCycle(bool [,] array1 , bool [,] array2)
+        {
+            //Variables
+            int liveNeighbors = 0;
+            //Examine all locations in the foreground for live tiles
+            //Considers X values of 0 or 79 for, and y values of 0, 59. All other values beyond are considered dead
+            for (int x = 1; x < 78; x++)
+            {
+                for (int y= 1; y < 58; y++)
+                {
 
+                    if(array1[x,y] == true)
+                    {
+                        
+                        //Eigth special Cases
+                        //1.)live above
+                        if (array1[x, y + 1] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //2.)live below
+                        if (array1[x, y - 1] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //3.)live left
+                        if(array1[x-1,y] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //4.)live right
+                        if(array1[x+1,y] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //5.)live top left
+                        if(array1[x-1, y+1] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //6.)live top right
+                        if(array1[x+1, y+1]== true)
+                        {
+                            liveNeighbors++;
+                        } 
+                        //7.)live bottom left
+                        if(array1[x -1, y-1] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //8.)live bottom right
+                        if(array1[x+1, y-1] == true)
+                        {
+                            liveNeighbors++;
+                        }
+                        //Determines how background will look based on the numbers of neighbors
+                        switch (liveNeighbors)
+                        {
+                            case 0:
+                            case 1:
+                                //Cell Dies at next cycle
+                                array2[x, y] = false;
+                                
+                                break;
+                            case 2:
+                                //Cell remains alive to next cycle
+                                array2[x, y] = true; 
+                                break;
+                            case 3:
+                                //cell remains alive point
+                                array2[x, y] = true;
+                                //Cell with three live neighbors will go from dead to alive 
+                   
+                                break;
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                                //Cell Dies
+                                array2[x, y] = false;
+                                break;
+                        }
+                        liveNeighbors = 0;
+                        
+                    }
+                }
+            }
+            //Draw Next Cycle using background Method
+            DrawNextCycle(backgroundArray);
+            //Consider exceptions for four corners
 
+            //
+        }
+        /************************************************************************************************
+         * Method: DrawNextCycle()
+         * Effect: Draws next Cycle using background array
+         * **********************************************************************************************/
+        public static void DrawNextCycle( bool [,] array2)
+        {
+            drawSpace.BBColour = Color.Black;
+            for (int x = 0; x < 79; x++)
+            {
+                for (int y = 0; y < 59; y++)
+                {
+                    if (array2[x, y] == true)
+                    {
+                        drawSpace.SetBBScaledPixel(x, y, patternColor);
+                    }
+
+                }
+            }
+           
+            
+        }
 
         /************************************************************************************************
-         * Method: DisplayArray()
+         * Method: DrawInitialArray()
          * Effect: First, clears the drawing window, then displays the cells found in the 2D byte array.
          *         Draws a color for live, and draws black for dead cells.
          ************************************************************************************************/
-        public void DisplayArray()
+        public void DrawInitialArray()
         {
             
             int xCoor;
@@ -136,10 +257,8 @@ namespace CMPE1600Lab4
             //Clears GDI Drawing window
             drawSpace.BBColour = Color.Black;
             //Clear array for a new pattern
-            ClearArrays(foregroundArray, backgroundArray);
+            ClearArrays();
 
-
-            
             //Draws Initial Setup without a pattern
             do
             {
@@ -184,7 +303,7 @@ namespace CMPE1600Lab4
             //Hides Application but callback method does nothing
         }
 
-       
+        
     }
 }
 
