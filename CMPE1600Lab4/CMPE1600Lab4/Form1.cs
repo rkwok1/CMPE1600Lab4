@@ -1,4 +1,15 @@
-﻿using System;
+﻿/********************************************************************************************************************************************************
+ * Program:        CMPE1600Lab4.cs
+ * Description:    The following program depicts and animates Conway's "Game of Life" through GDI drawer, using modal and modeless dialogs to adjust the
+ *                 game settings. You can adjust the color, number of cells and speed at which the game plays.
+ * Lab:            4
+ * Date:           March 20, 2017
+ * Author:         Ryan Kwok
+ * Class:          A01
+ * Instructor:     JD Silver
+ * ******************************************************************************************************************************************************/
+  
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,15 +28,16 @@ namespace CMPE1600Lab4
     {
         //Delegate declaration
         Speed dlg = null;
+       
         //Global Variables
-        Random rnd = new Random();
-        static CDrawer drawSpace = new CDrawer();
-        static bool[,] foregroundArray = new bool[80, 60];
-        static bool[,] backgroundArray = new bool[80, 60];
-        static Color patternColor = Color.Red;
-        int cellCount = 1000;
-        int cycleSpeed = 200;
-        int cycleCounter = 0;
+        Random rnd = new Random();                          //Random initializer
+        static CDrawer drawSpace = new CDrawer();           //GDI drawing space initializer
+        static bool[,] foregroundArray = new bool[80, 60];  //foreground array parameters and scale
+        static bool[,] backgroundArray = new bool[80, 60];  //background array parameters and scale
+        static Color patternColor = Color.Red;              //Holds the color of the selected color in modal dialog. Default is red
+        int cellCount = 1000;                               //Holds the number of cells that will be produced on screen. Default is 1000
+        int cycleSpeed = 200;                               //Holds speed at which the lifecycles occurs
+        int cycleCounter = 0;                               //GOlds the number of cycles that have occured
 
         public UI_MainForm()
         {
@@ -33,7 +45,7 @@ namespace CMPE1600Lab4
 
             //Scales GDI Drawer Window
             drawSpace.Scale = 10;
-
+            //Draws inital array upon boot up
             DrawInitialArray();
         }
 
@@ -53,7 +65,7 @@ namespace CMPE1600Lab4
                 if (null == dlg)
                 {
                     dlg = new Speed();
-                    dlg._dValueChanged = new delIntInt(CallbackValueChanged);
+                    dlg._dValueChanged = new delIntInt(CallbackValueChanged); 
                     dlg._dFormClosing = new delVoidVoid(CallbackDialogClosing);
                 }
                 dlg.Show();
@@ -102,20 +114,20 @@ namespace CMPE1600Lab4
         //While timer is enabled 
         private void UI_Timer_Tick(object sender, EventArgs e)
         {
-            UI_Timer.Interval = cycleSpeed;
-            LifeCycle(foregroundArray, backgroundArray);
+            UI_Timer.Interval = cycleSpeed; //Make interval equivalent to the cycle speed indicated by the modeless dialog
+            LifeCycle(foregroundArray, backgroundArray); //Initiates Lifecycles while timer is enabled
         }
 
 
-        ///////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        /////////////////////////////////////////////////////////////////Methods\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         /************************************************************************************************
          * Method: ClearArray()
          * Effect: Erases all data within passed array
          * **********************************************************************************************/
         public static void ClearArrays()
         {
-            Array.Clear(foregroundArray, 0, foregroundArray.Length);
-            Array.Clear(backgroundArray, 0, backgroundArray.Length);
+            Array.Clear(foregroundArray, 0, foregroundArray.Length);    //Clears foreground array
+            Array.Clear(backgroundArray, 0, backgroundArray.Length);    //Clears background array
         }
 
 
@@ -203,6 +215,7 @@ namespace CMPE1600Lab4
                                 //Cell with three live neighbors will go from dead to alive 
                                 array2[x, y] = true;
                                 break;
+
                                 //If greater than 3 live cells nearby, overpopualtion occurs
                             case 4:
                             case 5:
@@ -237,6 +250,7 @@ namespace CMPE1600Lab4
          * **********************************************************************************************/
         public static void DrawNextCycle(bool[,] array2)
         {
+            //Initialize first by making GDI drawer black
             drawSpace.BBColour = Color.Black;
             for (int x = 0; x < 80; x++)
             {
@@ -260,10 +274,11 @@ namespace CMPE1600Lab4
          ************************************************************************************************/
         public void DrawInitialArray()
         {
+            
+            int xCoor;           //Holds the x coordinates that the program iterates through
+            int yCoor;           //Holds the y coordinates that the program iterates through
+            int counter = 0;     //Counter to determine number of cells to initialize
 
-            int xCoor;
-            int yCoor;
-            int counter = 0;
             //Clears GDI Drawing window
             drawSpace.BBColour = Color.Black;
             //Clear array for a new pattern
