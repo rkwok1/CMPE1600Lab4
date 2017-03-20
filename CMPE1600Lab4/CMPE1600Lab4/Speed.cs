@@ -11,8 +11,8 @@ using System.Windows.Forms;
 namespace CMPE1600Lab4
 {
     //Define delegate type
-    public delegate void delIntInt(int value);
-    public delegate void delVoidVoid();
+    public delegate void delIntInt(int value);  //Delegate for trackbar value
+    public delegate void delVoidVoid();         //Delegate for hide function
     public partial class Speed : Form
     {
         int scrollValue = 0;
@@ -26,7 +26,7 @@ namespace CMPE1600Lab4
         //When Scroll Bar is adjusted
         private void UI_TrackBar_Speed_Scroll(object sender, EventArgs e)
         {
-            
+            //delegate function for value adjustment on track bar
             if(null != _dValueChanged)
             {   scrollValue = UI_TrackBar_Speed.Value;
                 _dValueChanged.Invoke(scrollValue);

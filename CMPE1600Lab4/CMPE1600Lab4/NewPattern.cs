@@ -12,6 +12,7 @@ namespace CMPE1600Lab4
 {
     public partial class NewPattern : Form
     {
+        //Modal dialog return for cell and color
         public int pCellCount
         {
             get
